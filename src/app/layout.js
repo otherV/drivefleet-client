@@ -19,7 +19,7 @@ export default function RootLayout({ children }) {
     >
       <body className={inter.className}>
         {children}
-        <ToastContainer position="top-right" />
+        <ToastContainer position="top-center" />
       </body>
     </html>
   );
