@@ -7,12 +7,15 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function RegisterPage() {
-    const [form, setForm] = useState({ name: "", email: "", password: "" });
+    const [form, setForm] = useState({ name: "", email: "", photoURL: "", password: "" });
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
     const handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        });
     };
 
     const validatePassword = (password) => {
@@ -34,6 +37,7 @@ export default function RegisterPage() {
             {
                 name: form.name,
                 email: form.email,
+                image: form.photoURL,
                 password: form.password,
             },
             {
@@ -77,6 +81,14 @@ export default function RegisterPage() {
                         required
                         className="input input-bordered w-full"
                         value={form.email}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type="url"
+                        name="photoURL"
+                        placeholder="Photo URL"
+                        className="input input-bordered w-full"
+                        value={form.photoURL}
                         onChange={handleChange}
                     />
                     <input
