@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaUsers, FaMapMarkerAlt, FaTag } from "react-icons/fa";
 
-export default function CarCard({ car }) {
+export default function CarCard({ car, eager }) {
     return (
         <div className="card bg-base-200 shadow-md hover:shadow-xl transition-shadow duration-300">
             <figure className="relative h-48">
@@ -10,6 +10,8 @@ export default function CarCard({ car }) {
                     src={car.image}
                     alt={car.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    loading={eager ? "eager" : "lazy"}
                     className="object-cover"
                 />
             </figure>
