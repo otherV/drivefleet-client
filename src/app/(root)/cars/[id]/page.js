@@ -1,3 +1,4 @@
+import BookingModal from "@/components/BookingModal";
 import Image from "next/image";
 import { FaUsers, FaMapMarkerAlt, FaTag, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
@@ -55,9 +56,7 @@ export default async function CarDetailsPage({ params }) {
                             </span>
                         </div>
 
-                        <button className="btn btn-primary btn-lg w-full mt-auto">
-                            Book Now
-                        </button>
+                        <BookingModal car={car} />
                     </div>
                 </div>
             </div>
