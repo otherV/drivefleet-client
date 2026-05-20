@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 const protectedRoutes = ["/add-car", "/my-bookings", "/my-cars"];
 const authRoutes = ["/login", "/register"];
 
-export async function middleware(request) {
+export default function proxy(request) {
     const pathname = request.nextUrl.pathname;
     const sessionCookie = getSessionCookie(request);
 
