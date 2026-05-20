@@ -20,7 +20,7 @@ export default async function ExploreCarsPage() {
                         <CarCard
                             key={car._id}
                             car={car}
-                            eager={index === 0}
+                            eager={(index === 0) ? "eager" : "lazy"}
                         />
                     ))}
                 </div>

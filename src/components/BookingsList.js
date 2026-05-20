@@ -35,7 +35,7 @@ export default function BookingsList({ bookings }) {
 
     return (
         <div className="flex flex-col gap-6">
-            {bookings.map((booking) => (
+            {bookings.map((booking, index) => (
                 <div key={booking._id} className="card bg-base-200 shadow-md">
                     <div className="card-body flex flex-row gap-6 items-center">
                         <div className="relative w-32 h-24 rounded-lg overflow-hidden shrink-0">
@@ -44,7 +44,7 @@ export default function BookingsList({ bookings }) {
                                 alt={booking.carName}
                                 fill
                                 sizes="128px"
-                                loading="eager"
+                                loading={(index === 0) ? "eager" : "lazy"}
                                 className="object-cover"
                             />
                         </div>
