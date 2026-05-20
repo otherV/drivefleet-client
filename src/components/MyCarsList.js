@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { FaMapMarkerAlt, FaUsers, FaTag } from "react-icons/fa";
+import UpdateCarModal from "./UpdateCarModal";
 
 export default function MyCarsList({ cars }) {
     const [loading, setLoading] = useState(null);
@@ -42,7 +43,7 @@ export default function MyCarsList({ cars }) {
     return (
         <>
             <div className="flex flex-col gap-6">
-                {cars.map((car) => (
+                {cars.map((car, index) => (
                     <div key={car._id} className="card bg-base-200 shadow-md">
                         <div className="card-body flex flex-row gap-6 items-center">
                             <div className="relative w-32 h-24 rounded-lg overflow-hidden shrink-0">
@@ -51,6 +52,7 @@ export default function MyCarsList({ cars }) {
                                     alt={car.name}
                                     fill
                                     sizes="128px"
+                                    loading={(index === 0) ? "eager" : "lazy"}
                                     className="object-cover"
                                 />
                             </div>
@@ -75,9 +77,10 @@ export default function MyCarsList({ cars }) {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 shrink-0">
-                                <button className="btn btn-primary btn-sm">
-                                    Update
-                                </button>
+
+                                {/* Component for Update Button & Model Inputs */}
+                                <UpdateCarModal car={car} />
+
                                 <button
                                     className="btn btn-error btn-sm"
                                     onClick={() => openDeleteModal(car)}
