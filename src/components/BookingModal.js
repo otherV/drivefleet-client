@@ -45,7 +45,7 @@ export default function BookingModal({ car }) {
                     bookingDate: new Date(),
                     driverNeeded: form.driverNeeded,
                     specialNote: form.specialNote,
-                    bookedBy: session.user.email,
+                    bookedBy: session.user.id,
                 }),
             });
             if (!res.ok) throw new Error("Booking failed");
