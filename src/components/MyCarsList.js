@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 import { FaMapMarkerAlt, FaUsers, FaTag } from "react-icons/fa";
 import UpdateCarModal from "./UpdateCarModal";
@@ -21,9 +22,19 @@ export default function MyCarsList({ cars }) {
         setLoading(selectedCar._id);
         modalRef.current.close();
         try {
+
+            const { data: tokenData, error: tokenError } = await authClient.token();
+            if (tokenError) throw new Error("Failed to get token");
+            const token = tokenData.token;
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/cars/${selectedCar._id}`,
-                { method: "DELETE" }
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                    },
+                }
             );
             if (!res.ok) throw new Error("Failed to delete car");
             toast.success("Car deleted successfully!");

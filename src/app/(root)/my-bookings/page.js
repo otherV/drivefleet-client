@@ -10,8 +10,17 @@ export default async function MyBookingsPage() {
 
     if (!session) redirect("/login");
 
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    });
+
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/bookings?userId=${session.user.id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/bookings?userId=${session.user.id}`,
+        {
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        },
     );
     const bookings = await res.json();
 

@@ -4,6 +4,7 @@ import { FaCar, FaCalendar, FaMoneyBillWave } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 export default function BookingsList({ bookings }) {
 
@@ -13,9 +14,19 @@ export default function BookingsList({ bookings }) {
     const handleCancel = async (bookingId) => {
         setLoading(bookingId);
         try {
+
+            const { data: tokenData, error: tokenError } = await authClient.token();
+            if (tokenError) throw new Error("Failed to get token");
+            const token = tokenData.token;
+
             const res = await fetch(
                 `${process.env.NEXT_PUBLIC_API_URL}/bookings/${bookingId}`,
-                { method: "DELETE" }
+                {
+                    method: "DELETE",
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
             );
             if (!res.ok) throw new Error("Failed to cancel booking");
 

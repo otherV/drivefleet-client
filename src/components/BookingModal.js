@@ -31,10 +31,16 @@ export default function BookingModal({ car }) {
         setLoading(true);
 
         try {
+
+            const { data: tokenData, error: tokenError } = await authClient.token();
+            if (tokenError) throw new Error("Failed to get token");
+            const token = tokenData.token;
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     carId: car._id,

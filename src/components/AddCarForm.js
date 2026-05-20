@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 import { toast } from "react-toastify";
 
 const CAR_TYPES = ["Sedan", "SUV", "Hatchback", "Luxury", "Sports", "Van"];
@@ -28,9 +29,17 @@ export default function AddCarForm({ userId }) {
         e.preventDefault();
         setLoading(true);
         try {
+
+            const { data: tokenData, error: tokenError } = await authClient.token();
+            if (tokenError) throw new Error("Failed to get token");
+            const token = tokenData.token;
+
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
                 body: JSON.stringify({
                     ...form,
                     price: Number(form.price),
