@@ -1,4 +1,6 @@
 import BookingModal from "@/components/BookingModal";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import { FaUsers, FaMapMarkerAlt, FaTag, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
@@ -11,6 +13,12 @@ async function getCar(id) {
 export default async function CarDetailsPage({ params }) {
     const { id } = await params;
     const car = await getCar(id);
+
+    const session = await auth.api.getSession({
+        headers: await headers()
+    });
+
+    const canBook = car.availability && car.addedBy !== session?.user?.id;
 
     return (
         <div className="min-h-screen bg-base-100 py-16 px-6">
@@ -56,7 +64,13 @@ export default async function CarDetailsPage({ params }) {
                             </span>
                         </div>
 
-                        <BookingModal car={car} />
+                        {canBook ? (
+                            <BookingModal car={car} />
+                        ) : (
+                            <button className="btn btn-disabled btn-lg w-full mt-auto" disabled>
+                                {!car.availability ? "Not Available" : "Your Listing"}
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

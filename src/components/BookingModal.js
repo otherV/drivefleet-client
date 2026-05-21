@@ -74,8 +74,13 @@ export default function BookingModal({ car }) {
             <button
                 className="btn btn-primary btn-lg w-full mt-auto"
                 onClick={() => modalRef.current.showModal()}
+                disabled={!car.availability || car.addedBy === session?.user?.id}
             >
-                Book Now
+                {!car.availability
+                    ? "Not Available"
+                    : car.addedBy === session?.user?.id
+                        ? "Your Listing"
+                        : "Book Now"}
             </button>
 
             <dialog ref={modalRef} className="modal">

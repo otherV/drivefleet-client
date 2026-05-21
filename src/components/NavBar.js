@@ -4,6 +4,7 @@ import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Navbar() {
     const { data: session, isPending } = authClient.useSession();
@@ -32,6 +33,7 @@ export default function Navbar() {
             <div className="flex-none gap-4">
                 <Link href="/" className="btn btn-ghost">Home</Link>
                 <Link href="/cars" className="btn btn-ghost">Explore Cars</Link>
+                <ThemeToggle />
                 {isPending ? (
                     <span className="loading loading-spinner loading-sm"></span>
                 ) : session ? (

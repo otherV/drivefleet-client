@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      data-theme="light"
+      data-theme="drivefleet-dark"
     >
       <body className={inter.className}>
         {children}
