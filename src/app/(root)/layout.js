@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Navbar from "@/components/NavBar";
 
 export default function RootGroupLayout({ children }) {
@@ -7,6 +8,7 @@ export default function RootGroupLayout({ children }) {
             <main className="flex-1">
                 {children}
             </main>
+            <Footer />
         </div>
     );
 }
