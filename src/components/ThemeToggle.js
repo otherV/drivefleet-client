@@ -1,15 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 export default function ThemeToggle() {
-    const [theme, setTheme] = useState("drivefleet-dark");
+    const [theme, setTheme] = useState(() => {
+        if (typeof window === "undefined") return "drivefleet-dark";
+        return localStorage.getItem("theme") || "drivefleet-dark";
+    });
 
-    useEffect(() => {
-        const stored = localStorage.getItem("theme") || "drivefleet-dark";
-        setTheme(stored);
-        document.documentElement.setAttribute("data-theme", stored);
-    }, []);
+    // apply theme on mount
+    if (typeof window !== "undefined") {
+        document.documentElement.setAttribute("data-theme", theme);
+    }
 
     const toggleTheme = () => {
         const newTheme = theme === "drivefleet-dark" ? "drivefleet-light" : "drivefleet-dark";

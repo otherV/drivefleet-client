@@ -80,3 +80,16 @@
 .text-error {
     color: #dc2626 !important;
 }
+
+
+[data-theme="drivefleet-dark"] {
+    --toastify-color-dark: #1a1a1a;
+    --toastify-text-color-dark: #e5e5e5;
+    --toastify-color-progress-dark: #f97316;
+}
+
+[data-theme="drivefleet-light"] {
+    --toastify-color-light: #ffffff;
+    --toastify-text-color-light: #171717;
+    --toastify-color-progress-light: #f97316;
+}
