@@ -48,7 +48,7 @@ export default function BookingsList({ bookings }) {
         <div className="flex flex-col gap-6">
             {bookings.map((booking, index) => (
                 <div key={booking._id} className="card bg-base-200 shadow-md">
-                    <div className="card-body flex flex-row gap-6 items-center">
+                    <div className="card-body flex flex-col md:flex-row gap-6 items-center">
                         <div className="relative w-32 h-24 rounded-lg overflow-hidden shrink-0">
                             <Image
                                 src={booking.carImage}
@@ -81,13 +81,15 @@ export default function BookingsList({ bookings }) {
                                 </p>
                             )}
                         </div>
+
                         <button
-                            className="btn btn-error btn-sm shrink-0"
+                            className="btn btn-error btn-sm w-full md:w-auto shrink-0"
                             onClick={() => handleCancel(booking._id)}
                             disabled={loading === booking._id}
                         >
                             {loading === booking._id ? "Cancelling..." : "Cancel"}
                         </button>
+
                     </div>
                 </div>
             ))}

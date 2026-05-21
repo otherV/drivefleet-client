@@ -56,7 +56,7 @@ export default function MyCarsList({ cars }) {
             <div className="flex flex-col gap-6">
                 {cars.map((car, index) => (
                     <div key={car._id} className="card bg-base-200 shadow-md">
-                        <div className="card-body flex flex-row gap-6 items-center">
+                        <div className="card-body flex flex-col md:flex-row gap-6 items-center">
                             <div className="relative w-32 h-24 rounded-lg overflow-hidden shrink-0">
                                 <Image
                                     src={car.image}
@@ -87,19 +87,18 @@ export default function MyCarsList({ cars }) {
                                     </span>
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-2 shrink-0">
 
-                                {/* Component for Update Button & Model Inputs */}
+                            <div className="flex flex-row md:flex-col gap-2 shrink-0 w-full md:w-auto">
                                 <UpdateCarModal car={car} />
-
                                 <button
-                                    className="btn btn-error btn-sm"
+                                    className="btn btn-error btn-sm flex-1 md:flex-none"
                                     onClick={() => openDeleteModal(car)}
                                     disabled={loading === car._id}
                                 >
                                     {loading === car._id ? "Deleting..." : "Delete"}
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 ))}
