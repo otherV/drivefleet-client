@@ -1,13 +1,20 @@
-import CarCard from "@/components/CarCard";
+import CarsFilter from "@/components/CarsFilter";
 
-async function getCars() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars`);
+async function getCars(search, type) {
+    const params = new URLSearchParams();
+    if (search) params.append("search", search);
+    if (type) params.append("type", type);
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/cars?${params.toString()}`
+    );
     const data = await res.json();
     return data;
 }
 
-export default async function ExploreCarsPage() {
-    const cars = await getCars();
+export default async function ExploreCarsPage({ searchParams }) {
+    const { search, type } = await searchParams;
+    const cars = await getCars(search, type);
 
     return (
         <div className="min-h-screen bg-base-100 py-16 px-6">
@@ -15,15 +22,7 @@ export default async function ExploreCarsPage() {
                 <h1 className="text-4xl font-black uppercase text-center mb-16">
                     Explore <span className="text-primary">Cars</span>
                 </h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {cars.map((car, index) => (
-                        <CarCard
-                            key={car._id}
-                            car={car}
-                            eager={(index === 0) ? "eager" : "lazy"}
-                        />
-                    ))}
-                </div>
+                <CarsFilter cars={cars} currentSearch={search} currentType={type} />
             </div>
         </div>
     );
