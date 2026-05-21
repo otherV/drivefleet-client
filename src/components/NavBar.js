@@ -88,10 +88,10 @@ export default function Navbar() {
                                     </ul>
                                 </div>
                             ) : (
-                                <>
+                                <div className="hidden lg:flex gap-2">
                                     <Link href="/login" className="btn btn-ghost">Login</Link>
                                     <Link href="/register" className="btn btn-primary">Register</Link>
-                                </>
+                                </div>
                             )}
                         </div>
                     </nav>

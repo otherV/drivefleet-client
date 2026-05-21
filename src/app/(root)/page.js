@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { FaCar, FaShieldAlt, FaHeadset, FaMoneyBillWave } from "react-icons/fa";
 import CarCard from "@/components/CarCard";
 
@@ -14,19 +15,61 @@ export default async function Home() {
   return (
     <div>
 
-
       {/* Banner */}
-      <section className="min-h-[90vh] bg-base-100 flex items-center px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-6xl font-black uppercase mb-6">
-            Drive Your <span className="text-primary">Dream</span> Car Today
-          </h1>
-          <p className="text-lg text-base-content/70 mb-8 max-w-xl mx-auto">
-            Premium car rentals at your fingertips. Choose from a wide selection of vehicles and hit the road in style.
-          </p>
-          <Link href="/cars" className="btn btn-primary btn-lg">
-            Explore Cars
-          </Link>
+      <section className="min-h-[90vh] bg-base-100 flex items-center px-6 relative overflow-hidden">
+
+        <div className="absolute inset-0 bg-linear-to-br from-base-100 via-base-100 to-primary/10 pointer-events-none" />
+        <div className="absolute -right-40 -top-40 w-96 h-96 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+        <div className="absolute -left-20 -bottom-20 w-72 h-72 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+
+          <div>
+            <span className="text-primary font-bold uppercase tracking-widest text-sm mb-4 block">
+              Premium Car Rental
+            </span>
+            <h1 className="text-5xl lg:text-7xl font-black uppercase mb-6 leading-none">
+              Drive Your <span className="text-primary">Dream</span> Car Today
+            </h1>
+            <p className="text-lg text-base-content/70 mb-8 max-w-md">
+              Premium car rentals at your fingertips. Choose from a wide selection of vehicles and hit the road in style.
+            </p>
+            <div className="flex gap-4">
+              <Link href="/cars" className="btn btn-primary btn-lg">
+                Explore Cars
+              </Link>
+              <Link href="/register" className="btn btn-outline btn-lg">
+                Get Started
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="flex gap-8 mt-12 pt-8 border-t border-base-content/10">
+              {[
+                { value: "500+", label: "Cars Available" },
+                { value: "50+", label: "Cities Covered" },
+                { value: "10k+", label: "Happy Customers" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <div className="text-2xl font-black text-primary">{stat.value}</div>
+                  <div className="text-xs text-base-content/50 uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Car image */}
+          <div className="relative hidden lg:block">
+            <div className="absolute inset-0 bg-primary/20 rounded-full blur-3xl" />
+            <Image
+              src="/hero.jpeg"
+              alt="Premium Car"
+              width={700}
+              height={500}
+              className="relative z-10 object-contain drop-shadow-2xl"
+              priority
+            />
+          </div>
         </div>
       </section>
 

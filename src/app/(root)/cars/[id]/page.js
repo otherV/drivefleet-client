@@ -1,18 +1,26 @@
 import BookingModal from "@/components/BookingModal";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { notFound } from 'next/navigation';
 import Image from "next/image";
-import { FaUsers, FaMapMarkerAlt, FaTag, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import Link from "next/link";
+import { FaFire, FaUsers, FaMapMarkerAlt, FaTag, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
 async function getCar(id) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${id}`);
-    const data = await res.json();
-    return data;
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${id}`);
+        if (!res.ok) return null;
+        const data = await res.json();
+        return data;
+    } catch (error) {
+        return null;
+    }
 }
 
 export default async function CarDetailsPage({ params }) {
     const { id } = await params;
     const car = await getCar(id);
+    if (!car) notFound();
 
     const session = await auth.api.getSession({
         headers: await headers()
@@ -62,9 +70,17 @@ export default async function CarDetailsPage({ params }) {
                                     : <><FaTimesCircle className="text-error" /> Not Available</>
                                 }
                             </span>
+                            <span className="flex items-center gap-3">
+                                <FaFire className="text-primary" />
+                                Booked {car.bookingCount} {car.bookingCount === 1 ? "time" : "times"}
+                            </span>
                         </div>
 
-                        {canBook ? (
+                        {!session ? (
+                            <Link href="/login" className="btn btn-primary btn-lg w-full mt-auto">
+                                Login to Book
+                            </Link>
+                        ) : canBook ? (
                             <BookingModal car={car} />
                         ) : (
                             <button className="btn btn-disabled btn-lg w-full mt-auto" disabled>
